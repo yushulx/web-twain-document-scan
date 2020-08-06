@@ -33,3 +33,6 @@ Visit `http://127.0.0.1:8081/` in your web browser.
 
 
 ![Polymer document scan](https://www.dynamsoft.com/codepool/wp-content/uploads/2020/08/polymer-shadow-dom-document-scan.png)
+
+## Blog
+[How to Make Dynamic Web TWAIN Work with Polymer Shadow DOM](https://www.dynamsoft.com/codepool/polymer-shadow-dom-web-document-scan.html)
