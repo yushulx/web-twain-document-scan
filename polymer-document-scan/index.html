@@ -114,10 +114,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // Get a free trial license key from https://www.dynamsoft.com/CustomerPortal/Portal/Triallicense.aspx
     // Dynamsoft.WebTwainEnv.ProductKey = 'LICENSE-KEY';
     Dynamsoft.WebTwainEnv.RegisterEvent('OnWebTwainReady', onReady);
-    var image = document.createElement('img');
 
     function onReady() {
-      document.querySelector("body > my-app").shadowRoot.querySelector("app-drawer-layout > app-header-layout > iron-pages > my-view1").shadowRoot.querySelector("#dwtcontrolContainer").appendChild(image);
       Dynamsoft.WebTwainEnv.CreateDWTObject(document.createElement('div'), function (obj) {
         DWObject = obj;
       }, function (errorString) {

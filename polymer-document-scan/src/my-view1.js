@@ -24,14 +24,20 @@ class MyView1 extends PolymerElement {
 
       <div class="card">
         <h1>Web Document Scan</h1>
-        <div id='dwtcontrolContainer'></div>
+        <div><img id="image"></div>
         <button on-click="handleClick">scan</button>
       </div>
     `;
   }
 
+  ready() {
+    super.ready();
+    // TODO: initialization
+  }
+
   handleClick() {
     if (DWObject) {
+      let image = this.shadowRoot.querySelector('#image');
       DWObject.SelectSource(function () {
           var onSuccess, onFailure;
           onSuccess = onFailure = function () {
