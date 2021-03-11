@@ -109,21 +109,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body>
   <my-app></my-app>
 
-  <script type="text/javascript">
-    var DWObject;
-    // Get a free trial license key from https://www.dynamsoft.com/CustomerPortal/Portal/Triallicense.aspx
-    // Dynamsoft.WebTwainEnv.ProductKey = 'LICENSE-KEY';
-    Dynamsoft.WebTwainEnv.RegisterEvent('OnWebTwainReady', onReady);
-
-    function onReady() {
-      Dynamsoft.WebTwainEnv.CreateDWTObject(document.createElement('div'), function (obj) {
-        DWObject = obj;
-      }, function (errorString) {
-        console.log(errorString)
-      });
-    }
-  </script>
-
   <noscript>
     Please enable JavaScript to view this website.
   </noscript>

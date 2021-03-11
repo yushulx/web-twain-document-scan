@@ -12,6 +12,9 @@ import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import './shared-styles.js';
 
 class MyView1 extends PolymerElement {
+  MyView1() {
+    this.dwtObj;
+  }
   static get template() {
     return html`
       <style include="shared-styles">
@@ -24,7 +27,8 @@ class MyView1 extends PolymerElement {
 
       <div class="card">
         <h1>Web Document Scan</h1>
-        <div><img id="image"></div>
+        <select size="1" id="source" style="position: relative; width: 220px;"></select>
+        <div id="dwtcontrolContainer"></div>
         <button on-click="handleClick">scan</button>
       </div>
     `;
@@ -33,23 +37,40 @@ class MyView1 extends PolymerElement {
   ready() {
     super.ready();
     // TODO: initialization
+    this.initializeDWT();
+  }
+
+  initializeDWT() {
+    // Dynamsoft.WebTwainEnv.ProductKey = "LICENSE-KEY";
+    Dynamsoft.WebTwainEnv.CreateDWTObjectEx({ WebTwainId: 'Viewer' }, (obj) => {
+      this.dwtObj = obj;
+      obj.Viewer.bind(this.shadowRoot.querySelector('#dwtcontrolContainer'));
+      obj.Viewer.width = 560;
+      obj.Viewer.height = 600;
+      obj.Viewer.show();
+
+      var count = obj.SourceCount;
+      for (var i = 0; i < count; i++) {
+        this.shadowRoot.querySelector('#source').options.add(new Option(obj.GetSourceNameItems(i), i));
+      }
+
+    }, function (e) {
+      console.log(e)
+    });
   }
 
   handleClick() {
-    if (DWObject) {
-      let image = this.shadowRoot.querySelector('#image');
-      DWObject.SelectSource(function () {
-          var onSuccess, onFailure;
-          onSuccess = onFailure = function () {
-              DWObject.CloseSource();
-              image.src = DWObject.GetImageURL(DWObject.CurrentImageIndexInBuffer, 640, 480);
-          };
-          DWObject.OpenSource();
-          DWObject.IfDisableSourceAfterAcquire = true;
-          DWObject.AcquireImage(onSuccess, onFailure);
-      }, function () {
-          console.log('SelectSource failed!');
-      });
+    var obj = this.dwtObj;
+    if (obj) {
+      var onSuccess, onFailure;
+      onSuccess = onFailure = function () {
+        obj.CloseSource();
+      };
+
+      obj.SelectSourceByIndex(this.shadowRoot.querySelector('#source').selectedIndex); 
+      obj.OpenSource();
+      obj.IfDisableSourceAfterAcquire = true;	
+      obj.AcquireImage(onSuccess, onFailure);
     }
   }
 }
